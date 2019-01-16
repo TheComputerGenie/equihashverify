@@ -746,9 +746,9 @@ bool Equihash<N,K>::IsValidSolution(const eh_HashState& base_state, std::vector<
         std::vector<FullStepRow<FinalFullWidth>> Xc;
         for (int i = 0; i < X.size(); i += 2) {
             if (!HasCollision(X[i], X[i+1], CollisionByteLength)) {
-                LogPrint("pow", "Invalid solution: invalid collision length between StepRows\n");
-                LogPrint("pow", "X[i]   = %s\n", X[i].GetHex(hashLen));
-                LogPrint("pow", "X[i+1] = %s\n", X[i+1].GetHex(hashLen));
+                //LogPrint("pow", "Invalid solution: invalid collision length between StepRows\n");
+                //LogPrint("pow", "X[i]   = %s\n", X[i].GetHex(hashLen));
+                //LogPrint("pow", "X[i+1] = %s\n", X[i+1].GetHex(hashLen));
                 return false;
             }
             if (X[i+1].IndicesBefore(X[i], hashLen, lenIndices)) {
