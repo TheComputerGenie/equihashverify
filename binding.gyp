@@ -35,7 +35,7 @@
             "HAVE_BYTESWAP_H=1"
             ],
             "cflags_cc": [
-                "-std=c++11",
+                "-std=c++14",
                 "-Wl,--whole-archive",
                 "-fPIC",
                 "-fexceptions"

@@ -1,3 +1,5 @@
+#undef V8_IMMINENT_DEPRECATION_WARNINGS
+
 #include <nan.h>
 #include <node.h>
 #include <node_buffer.h>
@@ -31,7 +33,7 @@ void Verify(const v8::FunctionCallbackInfo<Value>& args) {
 
     if (args.Length() < 4) {
         isolate->ThrowException(
-            Exception::TypeError(String::NewFromUtf8(isolate, "Wrong number of arguments"))
+            Exception::TypeError(String::NewFromUtf8(isolate, "Wrong number of arguments").ToLocalChecked())
         );
 
         return;
@@ -39,18 +41,18 @@ void Verify(const v8::FunctionCallbackInfo<Value>& args) {
 
     if (!args[3]->IsInt32() || !args[4]->IsInt32()) {
         isolate->ThrowException(
-            Exception::TypeError(String::NewFromUtf8(isolate, "Fourth and fifth parameters should be equihash parameters (n, k)"))
+            Exception::TypeError(String::NewFromUtf8(isolate, "Fourth and fifth parameters should be equihash parameters (n, k)").ToLocalChecked())
         );
 
         return;
     }
-
-    Local<Object> header = args[0]->ToObject();
-    Local<Object> solution = args[1]->ToObject();
+    auto context = v8::Isolate::GetCurrent()->GetCurrentContext();
+    Local<Object> header = args[0]->ToObject(context).ToLocalChecked();
+    Local<Object> solution = args[1]->ToObject(context).ToLocalChecked();
 
     if(!node::Buffer::HasInstance(header) || !node::Buffer::HasInstance(solution)) {
         isolate->ThrowException(
-            Exception::TypeError(String::NewFromUtf8(isolate, "First two arguments should be buffer objects."))
+            Exception::TypeError(String::NewFromUtf8(isolate, "First two arguments should be buffer objects.").ToLocalChecked())
         );
 
         return;
@@ -58,7 +60,7 @@ void Verify(const v8::FunctionCallbackInfo<Value>& args) {
 
     if (!args[2]->IsString()) {
         isolate->ThrowException(
-            Exception::TypeError(String::NewFromUtf8(isolate, "Third argument should be the personalization string."))
+            Exception::TypeError(String::NewFromUtf8(isolate, "Third argument should be the personalization string.").ToLocalChecked())
         );
 
         return;
@@ -75,7 +77,7 @@ void Verify(const v8::FunctionCallbackInfo<Value>& args) {
 
     std::vector<unsigned char> vecSolution(soln, soln + node::Buffer::Length(solution));
 
-    String::Utf8Value str(args[2]);
+    String::Utf8Value str(args.GetIsolate(), args[2]);
     const char* personalizationString = ToCString(str);
 
     // Validate for N, K (4th and 5th parameters)
