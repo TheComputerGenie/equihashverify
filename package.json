@@ -31,7 +31,7 @@
     "homepage": "https://github.com/TheComputerGenie/equihashverify",
     "dependencies": {
         "bindings": "*",
-        "libsodium": "^0.7.3",
+        "libsodium": "0.7.13",
         "nan": "*",
         "node-gyp": "*"
     },
