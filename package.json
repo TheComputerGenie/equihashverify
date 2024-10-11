@@ -2,7 +2,6 @@
     "name": "equihashverify",
     "version": "0.0.16",
     "description": "function to check whether an Equihash solution is valid",
-    "main": "equihashverify",
     "scripts": {
         "install": "env V=1 node-gyp rebuild",
         "test": "mocha"
